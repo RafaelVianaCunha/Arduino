@@ -26,7 +26,6 @@ void loop() {
 		int numChar = 8;
 		delay(100); // deixe o buffer encher
 
-
 		Serial.print("Digite o numero: ");
 		while (numChar--) {
 			buffer[index++] = Serial.read();
@@ -36,7 +35,11 @@ void loop() {
 		Serial.println(num);
 		// define latchPin como LOW, para permitir o fluxo de dados
 		digitalWrite(latchPin, LOW);
-		shiftOut(num);
+		if (num > 0 && num < 256) {
+			shiftOut(num);
+		} else {
+			Serial.println("Numero Invalido");
+		}
 		// define latchPin como HIGH, para fechar e enviar os dados
 		digitalWrite(latchPin, HIGH);
 
